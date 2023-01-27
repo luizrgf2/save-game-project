@@ -1,0 +1,19 @@
+{
+  "name": "save-game-project",
+  "version": "1.0.0",
+  "description": "project to create backups of savegames.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizrgf2/save-game-project.git"
+  },
+  "author": "Luiz Fellipe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luizrgf2/save-game-project/issues"
+  },
+  "homepage": "https://github.com/luizrgf2/save-game-project#readme"
+}
