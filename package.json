@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/luizrgf2/save-game-project/issues"
   },
-  "homepage": "https://github.com/luizrgf2/save-game-project#readme"
+  "homepage": "https://github.com/luizrgf2/save-game-project#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
 }
