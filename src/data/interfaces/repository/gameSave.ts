@@ -10,4 +10,5 @@ import { GameSaveInterface } from "../gameSave";
 
 export interface gameSaveRepositoryImp{
     create:(gameSave:Replacer<GameSaveInterface,{id?:string,createdAt?:Date,updatedAt?:Date}>)=>Promise<Either<ErrorBase,GameSaveInterface>>
+    removeByGameName:(gameName:string)=>Promise<Either<ErrorBase,void>>
 }
