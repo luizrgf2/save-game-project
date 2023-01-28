@@ -6,11 +6,11 @@ import { GameSaveInterface } from "../interfaces/gameSave"
 import { providerImp } from "../interfaces/providerInterface"
 import { gameSaveRepositoryImp } from "../interfaces/repository/gameSave"
 
-interface createGameSaveReq{
+export interface createGameSaveReq{
     gameSave:Replacer<GameSaveInterface,{id?:string,createdAt?:Date,updatedAt?:Date}>
 }
 
-interface createGameSaveRes{
+export interface createGameSaveRes{
     gameSave:GameSaveProps
 }
 
