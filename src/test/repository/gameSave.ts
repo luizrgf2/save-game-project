@@ -47,6 +47,12 @@ export class GameSaveRepositoryFake implements gameSaveRepositoryImp{
         return Right.create(this.gameSaves)
     }
 
+    async deleteByGameName (gameName: string):Promise<Either<ErrorBase, void>>{
+        const gameSaveToDelete = this.gameSaves.find(item=>item.nameGame === gameName)
+        if(!gameSaveToDelete) return Left.create(new GameSaveNotFoundError())
+        return Right.create(undefined)
+    }
+
     async removeByGameName (gameName: string) :Promise<Either<ErrorBase, void>>{
         const gameSave = this.gameSaves.find(item=>item.nameGame === gameName)
         if(!gameSave) return Left.create(new GameSaveNotFoundError())
