@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Either, Left, Right } from "../../data/errors/either";
 import { ErrorBase } from "../../data/errors/errorBase";
+import { GameSaveNotFoundError } from "../../data/errors/gameSaveNotFound";
 import { Replacer } from "../../data/helpers/replace";
 import { GameSaveInterface } from "../../data/interfaces/gameSave";
 import { gameSaveRepositoryImp } from "../../data/interfaces/repository/gameSave";
@@ -8,6 +9,14 @@ import { gameSaveRepositoryImp } from "../../data/interfaces/repository/gameSave
 export class PrismaRepository implements gameSaveRepositoryImp{
 
     constructor(private readonly prismaClient:PrismaClient){}
+    async  updateIdProvider(id: string, gameName:string) :Promise<Either<ErrorBase, void>>{
+        try{
+            const gameSaveToUpdate = await this.prismaClient.gameSave.update({where:{gameName:gameName},data:{idProvider:id}})
+            return Right.create(undefined)
+        }catch(e){
+            return Left.create(new GameSaveNotFoundError())
+        }
+    }
 
     async create(gameSave: Replacer<GameSaveInterface, { id?: string, createdAt?: Date, updatedAt?: Date }>) : Promise<Either<ErrorBase,GameSaveInterface>>{
         try{
