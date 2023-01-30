@@ -17,4 +17,5 @@ model GameSave{
   updatedAt DateTime @updatedAt
   directorySaveGame String
   provider String
+  idProvider String?
 }
