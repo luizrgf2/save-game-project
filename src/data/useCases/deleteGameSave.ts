@@ -5,6 +5,7 @@ import { gameSaveRepositoryImp } from "../interfaces/repository/gameSave"
 
 export interface DeleteGameSaveReq{
     nameGame:string,
+    idProvider:string,
     provider:"drive"|"onedrive"
 }
 
@@ -15,9 +16,10 @@ export class DeleteGameSaveUseCase{
         private readonly providerController:providerImp
     ){
     }
-    async exec({nameGame,provider}:DeleteGameSaveReq):Promise<Either<ErrorBase,void>>{
+
+    async exec({nameGame,provider,idProvider}:DeleteGameSaveReq):Promise<Either<ErrorBase,void>>{
         
-        const gameSaveDeleteFromProvider = await this.providerController.deleteGameSave(provider,nameGame)
+        const gameSaveDeleteFromProvider = await this.providerController.deleteGameSave(provider,idProvider)
         if(gameSaveDeleteFromProvider.left) return Left.create(gameSaveDeleteFromProvider.left)
         
         const gameSaveToDelete = await this.gameSaveRepository.deleteByGameName(nameGame)
