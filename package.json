@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "test:provider:google":"jest /home/luiz/projetos/meus/save-game-project/src/infra/services/provider.test.ts",
     "test": "jest"
   },
   "repository": {
@@ -26,6 +27,8 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@prisma/client": "^4.4.0"
+    "@google-cloud/local-auth": "^2.1.0",
+    "@prisma/client": "^4.4.0",
+    "googleapis": "^105.0.0"
   }
 }
