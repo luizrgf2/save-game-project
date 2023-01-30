@@ -11,6 +11,7 @@ export interface GameSaveProps{
     createdAt:Date,
     directorySaveGame:string,
     provider:"drive"|"onedrive"
+    idProvider?:string
 
 }
 
