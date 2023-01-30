@@ -41,7 +41,7 @@ export class CreateGameSaveUseCase{
     }
 
     async removeGameSaveFromDataBaseIfUploadFailed(gameNameToRemove:string):Promise<Either<ErrorBase,void>>{
-        const gameSaveToRemove = await this.gameSaveRepository.removeByGameName(gameNameToRemove)
+        const gameSaveToRemove = await this.gameSaveRepository.deleteByGameName(gameNameToRemove)
         if(gameSaveToRemove.left) return Left.create(gameSaveToRemove.left)
         return Right.create(undefined)
     }
