@@ -2,10 +2,12 @@ import { Provider } from "./provider"
 import path from 'path'
 import { PrismaRepository } from "../repository/prismaRepository"
 import { prismaClient } from "../database/prismaClient"
+import { Google } from "./google/google"
 
 
 describe("providers", function(){
-    const sut = new Provider()
+    const providerGoogle = new Google()
+    const sut = new Provider(providerGoogle)
 
 
     beforeAll(async ()=>{
