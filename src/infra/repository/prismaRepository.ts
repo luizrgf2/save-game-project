@@ -36,7 +36,8 @@ export class PrismaRepository implements gameSaveRepositoryImp{
                 id:gameSaveToCreate.id,
                 updatedAt:gameSaveToCreate.updatedAt,
                 nameGame:gameSaveToCreate.gameName,
-                provider:gameSaveToCreate.provider as any
+                provider:gameSaveToCreate.provider as any,
+                idProvider:gameSave.idProvider
             })
         }catch{
             return Left.create(new ErrorBase("Erro no servidor",500))
@@ -77,6 +78,7 @@ export class PrismaRepository implements gameSaveRepositoryImp{
             })
 
             const gamesSavesToReturn = gameSaves.map(item=>({
+                idProvider:item.idProvider,
                 createdAt:item.createdAt,
                 directorySaveGame:item.directorySaveGame,
                 id:item.id,
