@@ -6,6 +6,7 @@ import { GameSaveInterface } from "../../data/interfaces/gameSave";
 import { gameSaveRepositoryImp } from "../../data/interfaces/repository/gameSave";
 
 export class GameSaveRepositoryFake implements gameSaveRepositoryImp{
+   
     
     public gameSaves = [
         {
@@ -43,6 +44,12 @@ export class GameSaveRepositoryFake implements gameSaveRepositoryImp{
 
     ] as GameSaveInterface[]
     
+    async getGameSaveWithGameName (gameName: string) : Promise<Either<ErrorBase, GameSaveInterface>>{
+        const gameSave = this.gameSaves.find(item=>item.nameGame === gameName)
+        if(!gameSave) return Left.create(new GameSaveNotFoundError())
+        return Right.create(gameSave)
+    }
+
     async getAll () : Promise<Either<ErrorBase, GameSaveInterface[]>>{
         return Right.create(this.gameSaves)
     }
@@ -52,7 +59,13 @@ export class GameSaveRepositoryFake implements gameSaveRepositoryImp{
         if(!gameSaveToDelete) return Left.create(new GameSaveNotFoundError())
         return Right.create(undefined)
     }
-
+    
+    async updateIdProvider (id: string, gameName: string) : Promise<Either<ErrorBase, void>>{
+        const gameSave = this.gameSaves.find(item=>item.nameGame === gameName)
+        if(!gameSave) return Left.create(new GameSaveNotFoundError())
+        return Right.create(undefined)
+    }
+    
     async removeByGameName (gameName: string) :Promise<Either<ErrorBase, void>>{
         const gameSave = this.gameSaves.find(item=>item.nameGame === gameName)
         if(!gameSave) return Left.create(new GameSaveNotFoundError())
