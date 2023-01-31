@@ -13,5 +13,6 @@ export interface gameSaveRepositoryImp{
     removeByGameName:(gameName:string)=>Promise<Either<ErrorBase,void>>
     deleteByGameName:(gameName:string)=>Promise<Either<ErrorBase,void>>
     updateIdProvider:(id:string,gameName:string)=>Promise<Either<ErrorBase,void>>
+    getGameSaveWithGameName:(gameName:string)=>Promise<Either<ErrorBase,GameSaveInterface>>
     getAll:() => Promise<Either<ErrorBase,GameSaveInterface[]>>
 }
