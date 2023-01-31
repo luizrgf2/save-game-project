@@ -93,5 +93,28 @@ export class PrismaRepository implements gameSaveRepositoryImp{
         }
     }
 
+    async getGameSaveWithGameName(gameName: string) : Promise<Either<ErrorBase, GameSaveInterface>>{
+        try{
+            const gameSaveToFind = await this.prismaClient.gameSave.findUnique({
+                where:{
+                    gameName:gameName
+                }
+            })
+
+            if(!gameSaveToFind) return Left.create(new GameSaveNotFoundError())
+            return Right.create({
+                createdAt:gameSaveToFind.createdAt,
+                directorySaveGame:gameSaveToFind.directorySaveGame,
+                id:gameSaveToFind.id,
+                nameGame:gameSaveToFind.gameName,
+                provider:gameSaveToFind.provider as any,
+                updatedAt:gameSaveToFind.updatedAt,
+                idProvider:gameSaveToFind.idProvider||""
+            })
+
+        }catch(e){
+            return Left.create(new ErrorBase("Erro no servidor",500))
+        }
+    }
 
 }
