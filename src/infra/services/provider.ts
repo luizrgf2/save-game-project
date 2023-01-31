@@ -1,13 +1,32 @@
+import { OAuth2Client } from "google-auth-library";
 import { Either, Left, Right } from "../../data/errors/either";
 import { ErrorBase } from "../../data/errors/errorBase";
 import { providerImp } from "../../data/interfaces/providerInterface";
 import { Google } from "./google/google";
 
 export class Provider implements providerImp{
+
+    constructor(private readonly providerGoogle:Google){}
+
+    private clientGoogle?:OAuth2Client
+
+    private async getClientGoogle(){
+        if(this.clientGoogle!== undefined) return this.clientGoogle
+        this.clientGoogle = await this.providerGoogle.getClient()
+    }
+
+    private async getProviderGoogle(){
+        const client = await this.getClientGoogle()
+        if(!client) return
+        const provider = this.providerGoogle.exec(client)
+        return provider
+    }
+
     async uploadSaveToProvider (provider: "drive" | "onedrive", directoryOfGameSave: string, gameName: string) : Promise<Either<ErrorBase, void>>{
         if(provider === "drive"){
-            const providerGoogle = await Google.exec()
-            const fileUpdate = await providerGoogle.upload(directoryOfGameSave,gameName)
+            const provider = await this.getProviderGoogle()
+            if(!provider) return Left.create(new ErrorBase("Erro no cliente do google!",500))
+            const fileUpdate = await provider.upload(directoryOfGameSave,gameName)
             if(fileUpdate) return Left.create(new ErrorBase(fileUpdate.message,400))
             return Right.create(undefined)
         }else{
@@ -17,8 +36,9 @@ export class Provider implements providerImp{
 
     async deleteGameSave (provider: "drive" | "onedrive", idProvider: string) : Promise<Either<ErrorBase, void>>{
         if(provider === "drive"){
-            const providerGoogle = await Google.exec()
-            const fileDelete = await providerGoogle.delete(idProvider)
+            const provider = await this.getProviderGoogle()
+            if(!provider) return Left.create(new ErrorBase("Erro no cliente do google!",500))
+            const fileDelete = await  provider.delete(idProvider)
             if(fileDelete) return Left.create(new ErrorBase(fileDelete.message,400))
             return Right.create(undefined)
         }else{
