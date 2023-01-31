@@ -3,7 +3,7 @@ import { ErrorBase } from "../data/errors/errorBase";
 import { providerImp } from "../data/interfaces/providerInterface";
 
 export class ProviderFake implements providerImp{
-   async downloadGameSave (idProvider: string, outputFolder: string) : Promise<Either<ErrorBase, void>>{
+   async downloadGameSave (idProvider: string, outputFolder: string, provider:string) : Promise<Either<ErrorBase, void>>{
       return Right.create(undefined)
    }
 
