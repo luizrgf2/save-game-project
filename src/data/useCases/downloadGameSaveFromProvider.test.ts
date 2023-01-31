@@ -11,7 +11,8 @@ describe("downloadGameSaveFromProvider", function(){
         const sut = new DownloadGameSaveFromProviderUseCase(gameSaveRepository,provider)
         const res = await sut.exec({
             gameName:"Resident Evil",
-            outputFolder:"./saves"
+            outputFolder:"./saves",
+            provider:"drive"
         })
         expect(res.left).toBeFalsy()
         expect(res.right?.message).not.toBe(undefined)
