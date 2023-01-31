@@ -14,7 +14,7 @@ describe("deleteGameSaveUseCase", function(){
 
     it("should be able delete valid gameSave", async function(){
         const sut =  new DeleteGameSaveUseCase(gameSaveRepository,provider)
-        const res = await sut.exec({nameGame:"Resident Evil",provider:"drive"})
+        const res = await sut.exec({nameGame:"Resident Evil",provider:"drive",idProvider:""})
         expect(res.left).toBeFalsy()
 
     })
