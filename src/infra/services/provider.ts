@@ -12,7 +12,7 @@ export class Provider implements providerImp{
 
     private async getClientGoogle(){
         if(this.clientGoogle!== undefined) return this.clientGoogle
-        this.clientGoogle = await this.providerGoogle.getClient()
+        return this.clientGoogle = await this.providerGoogle.getClient()
     }
 
     private async getProviderGoogle(){
