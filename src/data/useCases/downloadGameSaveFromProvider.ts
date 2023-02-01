@@ -20,7 +20,7 @@ export class DownloadGameSaveFromProviderUseCase{
     async exec({gameName,outputFolder,provider}:DownloadGameSaveFromProviderReq):Promise<Either<ErrorBase,DownloadGameSaveFromProviderRes>>{
         const gameSaveToDownload = await this.gameSaveRepository.getGameSaveWithGameName(gameName)
         if(gameSaveToDownload.left) return Left.create(gameSaveToDownload.left)
-        const downloadGameSave = await this.provider.downloadGameSave(gameSaveToDownload.right.idProvider||"",outputFolder,provider)
+        const downloadGameSave = await this.provider.downloadGameSave(gameSaveToDownload.right.idProvider||"",outputFolder,provider,gameName)
         if(downloadGameSave.left) return Left.create(downloadGameSave.left)
         return Right.create({message:"Download completo e salvo!"})
     }
