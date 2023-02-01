@@ -41,11 +41,26 @@ export class ProviderGoogle implements ProviderInterface{
     async delete(id: string) : Promise<Error | undefined>{
         try{
             this.drive.files.delete({
-                fileId:id
+                fileId:id,
             })
         }catch(e){
             return new Error("Erro ao deletar arquivo no google drive!")
         }
+    }
+
+    async download(id:string): Promise<Error|fs.WriteStream>{
+        try{
+            const file = await this.drive.files.get({
+                fileId:id,
+                alt:"media"
+            },{responseType:"stream"})
+            const data = (file.data as any) as fs.WriteStream
+            return data 
+
+        }catch(e){
+            return new Error("Erro ao deletar arquivo no google drive!")
+        }
+
     }
 
 }
