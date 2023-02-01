@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { CreateGameSaveFactory } from "../../factories/createGameSave";
 import { DeleteGameSaveFactory } from "../../factories/deleteGameSave";
+import { DownloadGameSaveFactory } from "../../factories/downloadGameSave";
 import { ListAllGameSaveFactory } from "../../factories/listAllGameSave";
 
 export const routerExpress = Router()
@@ -33,6 +34,23 @@ routerExpress.delete("/gamesave/delete/:gameName/:idProvider/:provider", async (
 
 routerExpress.get("/gamesave/list", async (req,res)=>{
     const response = await ListAllGameSaveFactory.handle().exec({})
+    if(response.error) return res.status(response.status).send(response.error.message)
+    return res.status(response.status).send(response.body)
+})
+
+routerExpress.post("/gamesave/download", async (req,res)=>{
+    const params = req.body
+    const gameName = params.gameName
+    const provider = params.provider
+    const outputFolder = params.outputFolder
+
+    const response = await DownloadGameSaveFactory.handle().exec({
+        body:{
+            nameGame:gameName,
+            outputFolder:outputFolder,
+            provider:provider
+        }
+    })
     if(response.error) return res.status(response.status).send(response.error.message)
     return res.status(response.status).send(response.body)
 })
